@@ -1,0 +1,29 @@
+{% extends 'base/app.html' %}
+{% load static %}
+
+{% block title %}
+    Message sent
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-4 px-0">
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+            <div class="custom-card shadow-lg">
+                <span class="title">Hoo hoo!.</span>
+                {% if messages %}
+                <div class="alert alert-success" role="alert">
+                    {% for message in messages %}
+                    <i class="fas fa-check"></i> {{ message }}
+                    {% endfor %}
+                </div>
+                {% endif %}
+                <h5 class="mb-3" style="color: rgba(0, 0, 0, 0.8);">Now it's your turn to know what your friends honestly think about you! I mean, why wouldn't you want to know?</h5>
+                <a href="{% url 'login' %}" class="btn btn-blueviolet">Generate my link</a>
+            </div>
+        </div>
+        <div class="clip-success" style="margin-top:-80px;"></div>
+    </div>
+</div>
+{% endblock content %}

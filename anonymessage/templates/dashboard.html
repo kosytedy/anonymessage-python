@@ -1,0 +1,104 @@
+{% extends 'base/app.html' %}
+{% load static %}
+
+{% block title %}
+    {{ user.username|title }}'s dashboard
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-4 px-0">
+    <div class="row justify-content-center">
+
+        <div class="col-md-8 mb-5">
+            <span class="title">Welcome, {{ user.username }}.</span>
+            {% comment %}             
+                <div class="alert alert-success" role="alert">
+                    {{ session('status') }}
+                </div>
+             {% endcomment %}
+            <div class="card">
+                <div class="card-header">Your private link</div>
+
+                <div class="card-body">
+                    <div class="alert alert-primary">Share the link below to your friends and get honest and anonymous messages about you from them <i class="far fa-grin-squint-tears default-color-alt"></i>.</div>
+                    <div class="text-bold default-color mb-5" id="private_link"> {{ private_link }} </div> 
+                    <button class="btn btn-blueviolet" onclick="copyLink();" id="copy-btn">Copy link</button>
+                </div>
+            </div>
+            <hr>
+            <span class="title" style="font-size:20px;">My Recent Messages</span>
+            {% if messages.count > 0 %}
+                {% for message in messages %}
+                    <div class="message-card shadow-sm col-md-12 mx-0 my-2">
+                        <div class="card-header">{{ message.date_posted }}</div>
+                        <div class="card-body">
+                            {{ message.message }}
+                        </div>
+                    </div>
+                {% endfor %}
+
+                {% if messages.has_other_pages %}
+                <ul class="pagination">
+                    {% if messages.has_previous %}
+                    <li><a href="?page={{ messages.previous_page_number }}">&laquo;</a></li>
+                    {% else %}
+                    <li class="disabled"><span>&laquo;</span></li>
+                    {% endif %}
+                    {% for i in messages.paginator.page_range %}
+                    {% if messages.number == i %}
+                        <li class="active"><span>{{ i }} <span class="sr-only">(current)</span></span></li>
+                    {% else %}
+                        <li><a href="?page={{ i }}">{{ i }}</a></li>
+                    {% endif %}
+                    {% endfor %}
+                    {% if messages.has_next %}
+                    <li><a href="?page={{ messages.next_page_number }}">&raquo;</a></li>
+                    {% else %}
+                    <li class="disabled"><span>&raquo;</span></li>
+                    {% endif %}
+                </ul>
+                {% endif %}
+            {% else %}
+                <div class="message-card shadow-sm col-md-12 mx-0 my-2">
+                    <div class="card-header">No message yet</div>
+                    <div class="card-body">
+                        You haven't recieved any messages yet. Share your private link to your friends to get anonymous messages from them.
+                    </div>
+                </div>
+            {% endif %}
+        </div>
+        <div class="clip-dashboard" style="margin-top:-80px;"></div>
+    </div>
+</div>
+
+{% endblock content %}
+
+{% block js %}
+<script>
+    function copyLink() {
+        document.getElementById('copy-btn').innerHTML = "Link copied!";
+        const link = document.getElementById('private_link').innerText;
+        const el = document.createElement('textarea'); 
+        el.value = link;                                
+        el.setAttribute('readonly', '');               
+        el.style.position = 'absolute';                 
+        el.style.left = '-9999px';                    
+        document.body.appendChild(el);                  
+        const selected =            
+            document.getSelection().rangeCount > 0       
+            ? document.getSelection().getRangeAt(0)    
+            : false;                                   
+        el.select();                                    
+        document.execCommand('copy');                   
+        document.body.removeChild(el);                  
+        if (selected) {                                 
+            document.getSelection().removeAllRanges();    
+            document.getSelection().addRange(selected);   
+
+            setTimeout(function() {
+                document.getElementById('copy-btn').innerHTML = "Copy link";
+            }, 2000);
+        }
+    }
+</script>
+{% endblock js %}

@@ -1,0 +1,31 @@
+{% extends 'base/app.html' %}
+{% load static %}
+
+{% block css %}
+<link rel="stylesheet" href="{% static 'css/bootstrap-social.css' %}">
+{% endblock css %}
+
+{% block content %}
+<div class="container">
+    <div class="row justify-content-center">
+        <div class="col-12">
+            <div class="mt-5 text-center">
+                <div class="custom-card shadow-lg">
+                    <div class="m-2">
+                        <a href="{% url 'social:begin' 'facebook' %}" class="btn btn-social btn-facebook">
+                                <i class="fab fa-facebook-f"></i> Login via Facebook</a>
+                    </div>
+                    <div class="m-2">
+                        <a href="{% url 'social:begin' 'twitter' %}" class="btn btn-social btn-twitter">
+                            <i class="fab fa-twitter"></i> Login via Twitter</a>
+                    </div>
+                    <div class="m-2">
+                        <a href="" class="btn btn-social btn-google">
+                            <img src="{% static 'images/G__logo.svg.png' %}" alt="Google logo"> Login via Google</a>
+                    </div>
+                </div>
+            </div>
+        </div><div class="clip-login" style="margin-top:-60px;"></div>
+    </div>
+</div>
+{% endblock content %}

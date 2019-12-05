@@ -1,0 +1,46 @@
+{% extends 'base/app.html' %}
+{% load static %}
+
+{% block title %}
+    Write {{ user.username|title }} an anonymous message
+{% endblock title %}
+
+{% block content %}
+<div class="container mt-4 px-0">
+    <div class="row justify-content-center">
+
+        <div class="col-md-8">
+            <span class="title">Hey, there.</span>
+            <div class="card shadow-lg">
+                <div class="card-header">Your private message to <b>{{ user.username }}</b></div>
+
+                <div class="card-body">
+                    {% if form.errors %}
+                        {% for field in form %}
+                            {% for error in field.errors %}
+                                <div class="alert alert-danger">
+                                    <strong>{{ error|escape }}</strong>
+                                </div>
+                            {% endfor %}
+                        {% endfor %}
+                        {% for error in form.non_field_errors %}
+                            <div class="alert alert-danger">
+                                <strong>{{ error|escape }}</strong>
+                            </div>
+                        {% endfor %}
+                    {% endif %}
+
+                    <div class="alert alert-info"><i class="fas fa-info-circle"></i> Be honest or crazy if you like <i class="far fa-grin-squint-tears"></i>.</div>
+                    
+                    <form action="{% url 'private_link' user.username %}" method="post">
+                        {% csrf_token %}
+                        {{ form }}
+                        <input type="submit" value="Send message" class="btn btn-blueviolet float-right">
+                    </form>
+                </div>
+            </div>
+        </div>
+        <div class="clip-message" style="margin-top:-80px;"></div>
+    </div>
+</div>
+{% endblock content %}

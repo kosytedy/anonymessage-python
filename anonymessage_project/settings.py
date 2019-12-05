@@ -38,6 +38,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'bootstrap4',
+    'social_django'
 ]
 
 MIDDLEWARE = [
@@ -55,7 +57,7 @@ ROOT_URLCONF = 'anonymessage_project.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': ['/templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -63,9 +65,18 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'social_django.context_processors.backends',
+                'social_django.context_processors.login_redirect',
             ],
         },
     },
+]
+
+AUTHENTICATION_BACKENDS = [
+    'social_core.backends.twitter.TwitterOAuth',
+    'social_core.backends.instagram.InstagramOAuth2',
+    'social_core.backends.facebook.FacebookOAuth2',
+    'django.contrib.auth.backends.ModelBackend',
 ]
 
 WSGI_APPLICATION = 'anonymessage_project.wsgi.application'
@@ -122,3 +133,25 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/2.2/howto/static-files/
 
 STATIC_URL = '/static/'
+
+# Social Auth
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'dashboard'
+LOGOUT_URL = 'logout'
+LOGOUT_REDIRECT_URL = 'login'
+
+# Facebook
+SOCIAL_AUTH_FACEBOOK_KEY = 1111111111111111111111
+SOCIAL_AUTH_FACEBOOK_SECRET = 'xxxxxxxxxxxxxxxxxxxxxxx'
+SOCIAL_AUTH_FACEBOOK_SCOPE = ['email', 'user_link'] 
+SOCIAL_AUTH_FACEBOOK_PROFILE_EXTRA_PARAMS = {       
+    'fields': 'id, name, email'
+}
+SOCIAL_AUTH_FACEBOOK_EXTRA_DATA = [                
+    ('name', 'name'),
+    ('email', 'email'),
+]
+
+# Twitter
+SOCIAL_AUTH_TWITTER_KEY = 'xxxxxxxxxxxxxxxxxxxxx'
+SOCIAL_AUTH_TWITTER_SECRET = 'xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx'

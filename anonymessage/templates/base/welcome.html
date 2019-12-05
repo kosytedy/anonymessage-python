@@ -1,0 +1,35 @@
+{% load static %}
+{% load bootstrap4 %}
+<!DOCTYPE html>
+<html lang="en-US">
+    <head>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+
+        <title>AnonyMessage | Send and receive honest anonymous messages from your friends</title>
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href={% static "css/app.css" %}>
+        <link rel="stylesheet" href={% static "css/custom.css" %}>
+
+    </head>
+    <body class="bg-white">
+        <div class="full-height">
+            <div class="row">
+                <div class="col-md-5 col-sm-12 text-center p-5">
+                    <div class="vertical-center">
+                        <span class="title">AnonyMessage</span>
+                        <div class="mb-3 text"> Send and receive honest anonymous messages from your friends. It's always fun!</div>
+                        <a href="{% url 'login' %}" class="btn btn-blueviolet">Get private link</a>
+                        <a href="{% url 'dashboard' %}" class="btn btn-white">See messages</a>
+                    </div>
+                </div>
+                <div class="col-md-7 col-sm-12 mt-4">
+                    <img src={% static "images/standing-3@2x.png" %} width="49%">
+                    <img src={% static "images/sitting-8@2x.png" %} width="49%">
+                </div>
+                <div class="clip"></div>
+            </div>
+        </div>
+    </body>
+</html>
