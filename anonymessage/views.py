@@ -38,12 +38,13 @@ def dashboard(request):
     return render(request, 'dashboard.html', {'messages':messages, 'private_link': private_link})
 
 def send_message(request, username):
+    message_to = get_object_or_404(User, username=username)
     if request.method == 'POST':
         form = MessageForm(request.POST)
-        messaged_to = get_object_or_404(User, username=username)
+        
         if form.is_valid():
             message = form.save(commit=False)
-            message.user = messaged_to
+            message.user = message_to
             message.date_posted = timezone.now()
             message.save()
 
