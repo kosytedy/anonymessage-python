@@ -24,7 +24,7 @@ def dashboard(request):
     messages_list = request.user.message.order_by('-date_posted').all()
     
     paginator = Paginator(messages_list, 5)
-    #return HttpResponse(paginator.count)
+    
     page = request.GET.get('page', 1)
     try:
         messages = paginator.get_page(page)
@@ -35,7 +35,6 @@ def dashboard(request):
 
     private_link = request.build_absolute_uri(reverse('private_link', args=(request.user.username,)))
 
-    #return HttpResponse(messages.object_list)
     return render(request, 'dashboard.html', {'messages':messages, 'private_link': private_link})
 
 def send_message(request, username):
